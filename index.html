@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Olivier GPT</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI', Arial, sans-serif; background:#f0f2f5; color:#333; scroll-behavior:smooth; }
+header { background:#0D6EFD; color:white; padding:15px; text-align:center; position:fixed; top:0; width:100%; z-index:1000; box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+nav { background:#0B5ED7; display:flex; justify-content:center; position:fixed; top:60px; width:100%; z-index:999; box-shadow:0 2px 5px rgba(0,0,0,0.2);}
+nav a { color:white; padding:10px 20px; text-decoration:none; cursor:pointer; transition:0.3s; }
+nav a:hover { background:#094BBB; }
+
+section { min-height:100vh; padding:120px 20px 40px 20px; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; background:white; margin-bottom:20px; border-radius:10px; box-shadow:0 4px 12px rgba(0,0,0,0.1); width:90%; max-width:900px; }
+h1,h2 { margin-bottom:15px; text-align:center; }
+
+iframe { width:100%; height:70vh; border:none; border-radius:10px; box-shadow:0 2px 10px rgba(0,0,0,0.2); animation:pulse 2s infinite; }
+
+.quiz-question { margin:15px 0; width:100%; text-align:center; }
+.quiz-question button { background:#198754; color:white; margin:5px; padding:10px 15px; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
+.quiz-question button:hover { background:#146c43; transform:scale(1.05); }
+
+textarea { width:100%; max-width:600px; padding:10px; border-radius:5px; border:1px solid #ccc; margin-bottom:10px; }
+button.submitBtn { background:#0D6EFD; padding:10px 15px; color:white; border:none; border-radius:5px; cursor:pointer; transition:0.3s; }
+button.submitBtn:hover { background:#094BBB; transform:scale(1.05); }
+
+footer { background:#eee; text-align:center; padding:15px 0; margin-top:20px; color:#333; font-size:14px; }
+
+@keyframes pulse { 0%{transform:scale(1);}50%{transform:scale(1.05);}100%{transform:scale(1);} }
+
+@media (max-width:600px){
+    section { padding:100px 15px 30px 15px; }
+    nav { flex-wrap:wrap; }
+    iframe { height:50vh; }
+}
+</style>
+</head>
+<body>
+
+<header>
+    <h1><i class="fas fa-robot"></i> Olivier GPT</h1>
+</header>
+
+<nav>
+    <a href="#chatbot">Chatbot</a>
+    <a href="#projets">Projets</a>
+    <a href="#jeux">Jeux</a>
+    <a href="#a-propos">À propos</a>
+</nav>
+
+<!-- Chatbot -->
+<section id="chatbot">
+    <h1><i class="fas fa-comments"></i> Chatbot</h1>
+    <iframe src="https://oliviemangila97-jpg.github.io/Oliviera/" allowfullscreen></iframe>
+</section>
+
+<!-- Projets -->
+<section id="projets">
+    <h1><i class="fas fa-briefcase"></i> Mes Projets</h1>
+    <ul>
+        <li>Boostage des réseaux sociaux</li>
+        <li>Création des fichiers VPN</li>
+        <li>Développement d'applications</li>
+    </ul>
+</section>
+
+<!-- Jeux & Quiz -->
+<section id="jeux">
+    <h1><i class="fas fa-gamepad"></i> Jeux et Quiz Interactifs</h1>
+
+    <div class="quiz-question">
+        <p>1. Devinette : Qu’est-ce qui a des clés mais ne peut pas ouvrir de portes ?</p>
+        <button onclick="checkAnswer(this,true)">Piano</button>
+        <button onclick="checkAnswer(this,false)">Voiture</button>
+        <button onclick="checkAnswer(this,false)">Maison</button>
+    </div>
+
+    <div class="quiz-question">
+        <p>2. Quiz temps limité (10s) : 7 x 6 = ?</p>
+        <button onclick="checkTimedAnswer(this,true)">42</button>
+        <button onclick="checkTimedAnswer(this,false)">36</button>
+        <button onclick="checkTimedAnswer(this,false)">48</button>
+    </div>
+
+    <h2>Laisser un commentaire</h2>
+    <textarea id="commentInput" rows="4" placeholder="Votre commentaire..."></textarea>
+    <button class="submitBtn" onclick="submitComment()">Envoyer</button>
+    <ul id="commentList"></ul>
+</section>
+
+<!-- À propos -->
+<section id="a-propos">
+    <h1><i class="fas fa-user"></i> À propos de moi</h1>
+    <p>Bonjour, je suis <strong>Olivier Mangila</strong>, passionné par la technologie et l’IA. Je crée des chatbots, applications web et outils interactifs.</p>
+    <ul>
+        <li>Développement web et mobile</li>
+        <li>Création de systèmes VPN et sécurité informatique</li>
+        <li>Optimisation des réseaux sociaux</li>
+        <li>Intelligence artificielle</li>
+    </ul>
+    <p>Coordonnées :</p>
+    <ul>
+        <li>Email: oliviermangila97@gmail.com</li>
+        <li>Téléphone: 0981240435</li>
+    </ul>
+</section>
+
+<footer>© 2025 Olivier Mangila. Tous droits réservés.</footer>
+
+<script>
+let score = 0;
+
+function checkAnswer(button, isCorrect){
+    if(isCorrect){ button.style.backgroundColor='green'; score++; alert("Correct ✅"); }
+    else { button.style.backgroundColor='red'; alert("Faux ❌"); }
+}
+
+function checkTimedAnswer(button, isCorrect){
+    let countdown = setTimeout(()=>alert("Temps écoulé ⏰"), 10000);
+    if(isCorrect){ clearTimeout(countdown); button.style.backgroundColor='green'; score++; alert("Correct ✅"); }
+    else { clearTimeout(countdown); button.style.backgroundColor='red'; alert("Faux ❌"); }
+}
+
+function submitComment(){
+    const comment = document.getElementById('commentInput').value.trim();
+    if(comment){
+        const li = document.createElement('li'); li.textContent = comment;
+        document.getElementById('commentList').appendChild(li);
+        document.getElementById('commentInput').value='';
+    } else { alert("Écrivez quelque chose !"); }
+}
+</script>
+
+</body>
+</html>
